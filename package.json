@@ -10,12 +10,21 @@
     "status": "swift run Nightglow --status",
     "probe": "swift run Nightglow --probe",
     "app": "scripts/build-app.sh",
-    "install-app": "scripts/build-app.sh --install --open"
+    "install-app": "scripts/build-app.sh --install --open",
+    "site-build": "scripts/build-site.sh",
+    "site-test": "scripts/build-site.sh && node --test site/test/*.test.mjs",
+    "site-serve": "scripts/build-site.sh && npx http-server site/dist -p 8765 -c-1",
+    "site-deploy": "scripts/build-site.sh && ~/.claude/scripts/deploy-gh-pages.sh site/dist --domain nightglow.io",
+    "dns": "scripts/configure-dns.sh",
+    "dns-check": "scripts/configure-dns.sh --check"
   },
   "description": "Warm, sun-aware color temperature and brightness for every Mac display",
   "homepage": "https://nightglow.io",
   "repository": {
     "type": "git",
     "url": "https://github.com/micahstubbs/nightglow.git"
+  },
+  "devDependencies": {
+    "typescript": "5"
   }
 }

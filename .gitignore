@@ -6,3 +6,5 @@ node_modules
 build/
 *.xcodeproj
 archive/
+site/dist/
+node_modules/
