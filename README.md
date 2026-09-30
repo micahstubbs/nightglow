@@ -73,6 +73,19 @@ control of external monitors over DDC/CI, as in
 [MonitorControl](https://github.com/MonitorControl/MonitorControl), is a possible
 follow-up. Night Shift works independently; turn it off to avoid double warming.
 
+## Website
+
+`site/` is [nightglow.io](https://nightglow.io): static HTML/CSS plus TypeScript (`site/src`) that
+computes the sun at the visitor's location (San Francisco if location is denied) and themes the page
+with the app's own colour-temperature schedule.
+
+```bash
+yarn site-test     # compile + 10 unit tests (solar parity, contrast, location fallback)
+yarn site-serve    # http://localhost:8765  (?at=ISO-time, ?lat=&lon=, ?loc=off)
+yarn site-verify   # Playwright checks + screenshots against the served site
+yarn site-deploy   # publish site/dist to GitHub Pages (nightglow.io)
+```
+
 ## Contributing
 
 Issues and pull requests are welcome. Run `yarn test` before sending changes that touch
