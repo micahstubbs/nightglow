@@ -19,7 +19,13 @@ const check = (name, ok, detail = '') => {
   console.log(`${ok ? 'PASS' : 'FAIL'} ${name}${detail ? ` (${detail})` : ''}`);
 };
 
-const browser = await chromium.launch({ channel: 'chrome', headless: true });
+// CHROME_ARGS, e.g. --host-resolver-rules="MAP nightglow.io 185.199.108.153" while a new
+// domain is still negatively cached by the local resolver.
+const browser = await chromium.launch({
+  channel: 'chrome',
+  headless: true,
+  args: process.env.CHROME_ARGS ? [process.env.CHROME_ARGS] : [],
+});
 const url = (q = '') => base + (base.includes('?') ? '&' : '?') + q;
 
 async function page(ctxOptions, q, { width = 1440, height = 900 } = {}) {
