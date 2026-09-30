@@ -1,5 +1,9 @@
 # Nightglow
 
+[nightglow.io](https://nightglow.io) · MIT licensed · macOS 13+
+
+![Nightglow menu](docs/screenshots/menu.png)
+
 A macOS menu bar clone of [f.lux](https://justgetflux.com/): it warms the colour
 temperature of every display, and can dim them, following the sun at your location.
 
@@ -18,7 +22,24 @@ temperature of every display, and can dim them, following the sun at your locati
 - **Settings:** day/night temperature (with Candle, Tungsten, Halogen, Fluorescent,
   Daylight presets), day/night brightness, location source, launch at login.
 
-## Build and install
+## Install
+
+Download `Nightglow.zip` from the [latest release](https://github.com/micahstubbs/nightglow/releases/latest),
+unzip it and move `Nightglow.app` to `/Applications` or `~/Applications`.
+
+The build is ad-hoc signed, not notarized, so macOS blocks the first launch. Open it once, then go to
+**System Settings → Privacy & Security** and click **Open Anyway**. Or clear the quarantine flag:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Nightglow.app
+```
+
+Building from source (below) avoids this.
+
+## Build and install from source
+
+Requires Xcode (for XCTest) or the Swift 5.9+ toolchain.
+
 
 ```bash
 yarn test          # 23 XCTest cases for the core (solar, colour, schedule, gamma, location)
@@ -50,3 +71,13 @@ Brightness is software dimming through the gamma table, like f.lux. Hardware bac
 control of external monitors over DDC/CI, as in
 [MonitorControl](https://github.com/MonitorControl/MonitorControl), is a possible
 follow-up. Night Shift works independently; turn it off to avoid double warming.
+
+## Contributing
+
+Issues and pull requests are welcome. Run `yarn test` before sending changes that touch
+`Sources/NightglowCore`; UI changes should be checked with `scripts/verify-live.sh` against an
+installed build. Work is tracked with [beads](https://github.com/Dicklesworthstone/beads_rust) in `.beads/`.
+
+## License
+
+[MIT](LICENSE)
