@@ -1,7 +1,15 @@
 {
   "name": "nightglow",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "index.js",
   "author": "@micahstubbs <git@micah.fyi>",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "swift build",
+    "test": "swift test",
+    "status": "swift run Nightglow --status",
+    "probe": "swift run Nightglow --probe",
+    "app": "scripts/build-app.sh",
+    "install-app": "scripts/build-app.sh --install --open"
+  }
 }

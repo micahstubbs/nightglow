@@ -90,3 +90,11 @@ bv --robot-label-health | jq '.results.labels[] | select(.health_level == "criti
 **Performance:** Phase 1 instant, Phase 2 async (500ms timeout). Prefer `--robot-plan` over `--robot-insights` when speed matters. Results cached by data hash.
 
 Use bv instead of parsing beads.jsonl—it computes PageRank, critical paths, cycles, and parallel tracks deterministically.
+
+## Nightglow project notes
+
+- Swift package: `NightglowCore` (pure logic, XCTest in `Tests/`) and `Nightglow` (AppKit menu bar app + CLI). Build with `yarn build`, test with `yarn test`, bundle and install with `yarn install-app`.
+- Verify UI/behaviour against the installed app, not `swift run`: `scripts/verify-live.sh` clicks the status menu through System Events and reads the gamma tables with `Nightglow --gamma`. The status item lives in `menu bar 1` of process `Nightglow` (an accessory app has no main menu).
+- `UserDefaults(suiteName:)` returns nil when the suite equals the main bundle id; use `SettingsStore.userDefaults` (crashed the bundled app at launch, bd-2kl).
+- A grouped SwiftUI `Form` has no ideal height; the hosting `NSWindow` collapses to its title bar unless the view sets an explicit height.
+- Screenshots never show the gamma tint; check it numerically with `--gamma` or `--probe`.
