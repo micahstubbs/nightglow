@@ -43,5 +43,10 @@ PAGES=$(gh api "repos/$REPO/pages" -q '"\(.status) \(.https_enforced) \(.https_c
 [ "$PAGES" = "built true approved $D" ] && ok "Pages: $PAGES" || bad "Pages: $PAGES"
 
 if curl -s -m 10 -o /dev/null "https://$D/"; then ok "this machine resolves $D"
-else echo "NOTE this machine cannot resolve $D ($(dig +short "$D" | head -1)); check its resolver cache, not the site"; fi
+else
+  echo "NOTE this machine cannot reach $D; the site checks above are what matter."
+  echo "     DNS server answer: $(dig +short "$D" | head -1 || true). If that is an IP, the macOS"
+  echo "     system cache (mDNSResponder) still holds an old NXDOMAIN. It expires on its own, or run:"
+  echo "     sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder"
+fi
 exit $fail
