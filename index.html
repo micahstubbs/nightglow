@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en" data-phase="night">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nightglow — your Mac, in step with the sun</title>
+    <meta
+      name="description"
+      content="Nightglow is a free, open-source macOS menu bar app that warms your screen's color temperature and dims it as the sun sets where you are."
+    />
+    <meta name="theme-color" content="#0b1029" />
+    <meta property="og:title" content="Nightglow — your Mac, in step with the sun" />
+    <meta property="og:description" content="Free, open-source warm-screen app for macOS that follows the sun at your location." />
+    <meta property="og:url" content="https://nightglow.io/" />
+    <meta property="og:image" content="https://nightglow.io/assets/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://nightglow.io/" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Gloock&family=Hanken+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="js/main.js"></script>
+  </head>
+  <body>
+    <div id="tint" class="tint" data-testid="page-tint" aria-hidden="true"></div>
+
+    <header id="topbar" class="topbar" data-testid="topbar">
+      <a class="wordmark" href="#top" id="wordmark" data-testid="wordmark">
+        <svg class="wordmark__mark" viewBox="0 0 32 32" aria-hidden="true">
+          <circle cx="16" cy="19" r="8" fill="currentColor" />
+          <rect x="2" y="19" width="28" height="11" fill="var(--sky-bottom, #0b1029)" />
+          <line x1="2" y1="19.5" x2="30" y2="19.5" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+        nightglow
+      </a>
+      <nav class="topbar__nav" aria-label="Sections">
+        <a href="#the-day" id="nav-day" data-testid="nav-day">The day</a>
+        <a href="#features" id="nav-features" data-testid="nav-features">How it works</a>
+        <a href="#install" id="nav-install" data-testid="nav-install">Install</a>
+        <a href="https://github.com/micahstubbs/nightglow" id="nav-github" data-testid="nav-github" class="topbar__gh">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section id="hero" class="hero" data-testid="hero" aria-labelledby="hero-title">
+        <canvas id="stars" class="hero__stars" aria-hidden="true"></canvas>
+        <svg class="hero__arc" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
+          <path id="sun-path" class="hero__path" d="" />
+        </svg>
+        <div id="sun" class="hero__sun" data-testid="hero-sun" aria-hidden="true"></div>
+        <div class="hero__ground" aria-hidden="true">
+          <div class="hero__horizon"></div>
+        </div>
+
+        <div class="hero__copy">
+          <p class="eyebrow reveal" style="--d: 0">Free &amp; open source · macOS 13+</p>
+          <h1 id="hero-title" class="hero__title reveal" style="--d: 1">Night<span>glow</span></h1>
+          <p class="hero__lede reveal" style="--d: 2">
+            Your Mac, in step with the sun. Full daylight while it's up; warm, gentle light once it sets, on every
+            display you own.
+          </p>
+          <div class="hero__cta reveal" style="--d: 3">
+            <a
+              class="button button--primary"
+              id="download"
+              data-testid="download"
+              href="https://github.com/micahstubbs/nightglow/releases/latest/download/Nightglow.zip"
+              >Download for Mac</a
+            >
+            <a class="button button--ghost" id="source" data-testid="source" href="https://github.com/micahstubbs/nightglow"
+              >Read the source</a
+            >
+          </div>
+        </div>
+
+        <dl id="almanac" class="almanac reveal" style="--d: 4" data-testid="almanac" aria-live="polite">
+          <div class="almanac__cell">
+            <dt>Place</dt>
+            <dd id="alm-place">San Francisco</dd>
+            <dd id="alm-place-note" class="almanac__note">37.8° N 122.4° W · default</dd>
+          </div>
+          <div class="almanac__cell">
+            <dt>Sun</dt>
+            <dd id="alm-sun">—</dd>
+            <dd id="alm-sun-note" class="almanac__note"></dd>
+          </div>
+          <div class="almanac__cell">
+            <dt>Sunrise · Sunset</dt>
+            <dd><span id="alm-sunrise">—</span> · <span id="alm-sunset">—</span></dd>
+            <dd id="alm-next" class="almanac__note"></dd>
+          </div>
+          <div class="almanac__cell">
+            <dt>This page</dt>
+            <dd id="alm-page">—</dd>
+            <dd id="alm-page-note" class="almanac__note"></dd>
+          </div>
+          <div class="almanac__cell almanac__cell--time">
+            <dt>Local time</dt>
+            <dd id="alm-time">—</dd>
+            <dd class="almanac__note">
+              <button id="tint-toggle" class="linkish" type="button" aria-pressed="true" data-testid="tint-toggle">
+                Page tint on
+              </button>
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section id="the-day" class="day" data-testid="the-day" aria-labelledby="day-title">
+        <div class="section-head">
+          <p class="kicker">I · The day</p>
+          <h2 id="day-title">This page is already running Nightglow.</h2>
+          <p class="section-lede">
+            The colors you're reading come from the sun's position where you are right now, or over San Francisco if
+            you'd rather not share. Drag across the day to see what your screen will do.
+          </p>
+        </div>
+        <div class="strip-wrap">
+          <div
+            id="strip"
+            class="strip"
+            role="slider"
+            tabindex="0"
+            aria-label="Time of day"
+            aria-valuemin="0"
+            aria-valuemax="1440"
+            data-testid="day-strip"
+          >
+            <div id="strip-sky" class="strip__band strip__band--sky"></div>
+            <div id="strip-warm" class="strip__band strip__band--warm"></div>
+            <div id="strip-now" class="strip__now" data-testid="strip-now"></div>
+          </div>
+          <div id="strip-marks" class="strip__marks"></div>
+          <div class="strip__hours" aria-hidden="true">
+            <span>Midnight</span><span>6 AM</span><span>Noon</span><span>6 PM</span><span>Midnight</span>
+          </div>
+          <div class="strip__legend">
+            <span><i class="swatch swatch--sky"></i>Sky at the horizon</span>
+            <span><i class="swatch swatch--warm"></i>Your screen's tint and brightness</span>
+          </div>
+          <div class="strip__controls">
+            <button id="play-day" class="button button--small" type="button" data-testid="play-day">Play the day</button>
+            <button id="back-to-now" class="button button--small button--ghost" type="button" hidden data-testid="back-to-now">
+              Back to now
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="features" data-testid="features" aria-labelledby="features-title">
+        <div class="section-head">
+          <p class="kicker">II · How it works</p>
+          <h2 id="features-title">Follows the sun, not the clock.</h2>
+        </div>
+        <ol class="features__list">
+          <li class="feature" id="feature-sun">
+            <span class="feature__num">01</span>
+            <h3>Twilight, measured</h3>
+            <p>
+              Nightglow computes the sun's elevation for your coordinates with the
+              <a href="https://gml.noaa.gov/grad/solcalc/calcdetails.html" target="_blank" rel="noopener">NOAA solar equations</a>.
+              Daylight holds until the sun is 3° up, then eases to evening warmth by the end of civil twilight, 6° below
+              the horizon. In June and in December, in Oslo and in Quito, it tracks the real sky.
+            </p>
+          </li>
+          <li class="feature" id="feature-displays">
+            <span class="feature__num">02</span>
+            <h3>Every display, calibration intact</h3>
+            <p>
+              It scales each monitor's own ColorSync gamma table rather than replacing it. External screens warm up too,
+              and your calibration survives.
+            </p>
+          </li>
+          <li class="feature" id="feature-location">
+            <span class="feature__num">03</span>
+            <h3>Works before you say yes</h3>
+            <p>
+              No location permission? Nightglow starts from your time zone's reference city. Allow Location Services and
+              it refines to within a kilometre. Coordinates never leave your Mac.
+            </p>
+          </li>
+          <li class="feature" id="feature-safe">
+            <span class="feature__num">04</span>
+            <h3>Can't leave you orange</h3>
+            <p>
+              macOS drops the tint the moment the app quits or crashes. Pause for an hour from the menu, preview a whole
+              day in twelve seconds, or set day and night temperatures from Candle to Daylight.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="shots" class="shots" data-testid="screenshots" aria-label="Screenshots">
+        <figure class="shot shot--menu">
+          <img src="assets/menu.png" width="267" height="224" alt="Nightglow's menu: 3400 K at night, sun elevation, next sunrise, pause and preview controls" loading="lazy" />
+          <figcaption>The menu bar, after sunset.</figcaption>
+        </figure>
+        <figure class="shot shot--settings">
+          <img src="assets/settings.png" width="460" height="772" alt="Nightglow settings: day and night temperature and brightness sliders, location source, launch at login" loading="lazy" />
+          <figcaption>Settings: temperatures, brightness, location.</figcaption>
+        </figure>
+      </section>
+
+      <section id="install" class="install" data-testid="install" aria-labelledby="install-title">
+        <div class="section-head">
+          <p class="kicker">III · Install</p>
+          <h2 id="install-title">Two minutes, then forget it.</h2>
+        </div>
+        <ol class="install__steps">
+          <li>
+            <h3>Download</h3>
+            <p>Get <a href="https://github.com/micahstubbs/nightglow/releases/latest/download/Nightglow.zip">Nightglow.zip</a>, unzip it, and move <b>Nightglow.app</b> to Applications.</p>
+          </li>
+          <li>
+            <h3>Open it once</h3>
+            <p>
+              Nightglow isn't notarized yet, so macOS asks first. Open it, then choose <b>System Settings → Privacy &amp;
+              Security → Open Anyway</b>. Or run:
+            </p>
+            <pre><code id="xattr-cmd">xattr -dr com.apple.quarantine /Applications/Nightglow.app</code></pre>
+          </li>
+          <li>
+            <h3>Or build it yourself</h3>
+            <pre><code>git clone https://github.com/micahstubbs/nightglow
+cd nightglow &amp;&amp; yarn install-app</code></pre>
+            <p>Swift, no Xcode project, 23 tests. Pull requests welcome.</p>
+          </li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="footer" id="footer" data-testid="footer">
+      <p>© <span id="year"></span> Micah Stubbs · Nightglow is <a href="https://github.com/micahstubbs/nightglow/blob/master/LICENSE">MIT licensed</a>.</p>
+      <p class="footer__fine">
+        Inspired by <a href="https://justgetflux.com/" rel="noopener">f.lux</a>, which pioneered this idea. Nightglow is an
+        independent project, not affiliated with or endorsed by f.lux Software LLC.
+      </p>
+    </footer>
+  </body>
+</html>
