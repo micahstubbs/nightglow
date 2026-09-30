@@ -4,8 +4,9 @@
 
 ![Nightglow menu](docs/screenshots/menu.png)
 
-A macOS menu bar clone of [f.lux](https://justgetflux.com/): it warms the colour
-temperature of every display, and can dim them, following the sun at your location.
+An open-source macOS menu bar app in the spirit of [f.lux](https://justgetflux.com/): it warms the
+colour temperature of every display, and can dim them, following the sun at your location.
+Nightglow is an independent project, not affiliated with or endorsed by f.lux Software LLC.
 
 - **Sun-driven:** NOAA solar-position equations give the sun's elevation for your
   coordinates. Full daytime settings above +3°, full night below −6° (end of civil
