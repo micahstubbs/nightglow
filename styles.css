@@ -85,7 +85,8 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 22px var(--gutter);
+  /* Leave room for the GitHub corner. */
+  padding: 22px calc(var(--gutter) + clamp(52px, 5vw, 72px)) 22px var(--gutter);
   color: var(--hero-ink);
 }
 .wordmark {
@@ -116,6 +117,45 @@ a:hover {
   opacity: 1;
   color: inherit;
   text-decoration: underline;
+}
+
+/* GitHub corner: accent triangle, octocat in the page colour, waves on hover. */
+.github-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 20;
+  width: clamp(64px, 6vw, 84px);
+  aspect-ratio: 1;
+}
+.github-corner svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 6px 18px rgb(0 0 0 / 0.25));
+}
+.github-corner__bg {
+  fill: var(--accent);
+  transition: fill var(--slow) var(--ease);
+}
+.github-corner__arm,
+.github-corner__body {
+  fill: var(--paper);
+  transition: fill var(--slow) var(--ease);
+}
+.github-corner__arm {
+  transform-origin: 130px 106px;
+}
+.github-corner:hover .github-corner__arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+.github-corner:focus-visible {
+  outline-offset: -6px;
+}
+@keyframes octocat-wave {
+  0%, 100% { transform: rotate(0); }
+  20%, 60% { transform: rotate(-25deg); }
+  40%, 80% { transform: rotate(10deg); }
 }
 
 /* ---- hero -------------------------------------------------------------- */
