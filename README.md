@@ -1,6 +1,9 @@
 # Nightglow
 
-[nightglow.io](https://nightglow.io) · MIT licensed · macOS 13+
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-c4531a)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/micahstubbs/nightglow?color=f2a257)](https://github.com/micahstubbs/nightglow/releases/latest)
+[![Website](https://img.shields.io/badge/web-nightglow.io-1d2356)](https://nightglow.io)
+![macOS 13+](https://img.shields.io/badge/macOS-13%2B-22170f)
 
 ![Nightglow menu](docs/screenshots/menu.png)
 
@@ -94,4 +97,4 @@ installed build. Work is tracked with [beads](https://github.com/Dicklesworthsto
 
 ## License
 
-[MIT](LICENSE)
+[Apache License 2.0](LICENSE). See [NOTICE](NOTICE).

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "index.js",
   "author": "@micahstubbs <git@micah.fyi>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "swift build",
     "test": "swift test",

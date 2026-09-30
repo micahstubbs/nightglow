@@ -113,7 +113,25 @@ for (const [phase, at] of Object.entries(phases)) {
   await ctx.close();
 }
 
-// 5. Phone width: no horizontal scroll.
+// 5. Links to the GitHub repository: corner ribbon, nav, eyebrow, footer.
+{
+  const { ctx, p } = await page({}, 'loc=off');
+  const repo = 'https://github.com/micahstubbs/nightglow';
+  for (const id of ['github-corner', 'nav-github', 'eyebrow-github', 'footer-github', 'source']) {
+    const href = await p.getAttribute(`#${id}`, 'href');
+    const visible = await p.isVisible(`#${id}`);
+    check(`repo link #${id}`, href === repo && visible, `${href} visible=${visible}`);
+  }
+  const box = await p.locator('#github-corner').boundingBox();
+  const vw = p.viewportSize().width;
+  check('corner sits in the top-right', box.y === 0 && Math.abs(box.x + box.width - vw) < 1, JSON.stringify(box));
+  const license = await p.textContent('#footer');
+  check('footer states Apache License 2.0', license.includes('Apache License 2.0'));
+  await p.screenshot({ path: `${out}/corner.png`, clip: { x: vw - 420, y: 0, width: 420, height: 140 } });
+  await ctx.close();
+}
+
+// 6. Phone width: no horizontal scroll.
 {
   const { ctx, p } = await page({}, 'loc=off', { width: 390, height: 844 });
   await p.waitForTimeout(1500);
