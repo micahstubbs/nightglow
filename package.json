@@ -17,7 +17,8 @@
     "site-deploy": "scripts/build-site.sh && ~/.claude/scripts/deploy-gh-pages.sh site/dist --domain nightglow.io",
     "dns": "scripts/configure-dns.sh",
     "dns-check": "scripts/configure-dns.sh --check",
-    "site-verify": "node scripts/verify-site.mjs"
+    "site-verify": "node scripts/verify-site.mjs",
+    "site-check": "scripts/check-live.sh"
   },
   "description": "Warm, sun-aware color temperature and brightness for every Mac display",
   "homepage": "https://nightglow.io",
